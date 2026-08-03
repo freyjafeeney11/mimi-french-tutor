@@ -1,6 +1,8 @@
 # Mimi — AI French Teacher
 
 A French-tutoring chatbot with a Godot desktop client and a locally-served LLM backend.
+<img width="689" height="346" alt="Screenshot 2026-08-03 at 17 33 34" src="https://github.com/user-attachments/assets/f5462c31-7ad8-42b5-9d16-68f45c934f12" />
+
 
 ## Overview
 
