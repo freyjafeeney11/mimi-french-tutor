@@ -1,0 +1,101 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2irqdsfmf8ah"]
+
+[ext_resource type="Script" path="res://scripts/chatbox.gd" id="1_dced5"]
+[ext_resource type="Texture2D" uid="uid://caf0ai1sixfbe" path="res://art/mimi_Face.png" id="2_2vep7"]
+[ext_resource type="Texture2D" uid="uid://dp0iyu5tchord" path="res://art/background.png" id="2_qj57k"]
+[ext_resource type="FontFile" uid="uid://4m3pbkng8y1u" path="res://fonts/VT323/VT323-Regular.ttf" id="3_26ltr"]
+
+[sub_resource type="Theme" id="Theme_d5r8n"]
+default_base_scale = 9.0
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(300, 0)
+
+[node name="Chat Node" type="Node2D" parent="."]
+position = Vector2(-5, 400)
+scale = Vector2(1.4, 1.4)
+
+[node name="ChatBox" type="Control" parent="Chat Node"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 520.0
+offset_top = -250.0
+offset_right = 620.0
+offset_bottom = -50.0
+scale = Vector2(1.65, 1.65)
+script = ExtResource("1_dced5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chat Node/ChatBox"]
+z_index = -1
+position = Vector2(-20, -10)
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("2_qj57k")
+centered = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Chat Node/ChatBox"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 380.0
+offset_bottom = 730.0
+scale = Vector2(0.9, 0.9)
+
+[node name="ChatDisplay" type="TextEdit" parent="Chat Node/ChatBox/VBoxContainer"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+theme_override_colors/background_color = Color(0.580138, 0.618737, 0.680492, 1)
+theme_override_colors/font_outline_color = Color(0.673635, 0.763087, 0.861834, 1)
+theme_override_colors/font_color = Color(0.242011, 0.292411, 0.333402, 1)
+theme_override_fonts/font = ExtResource("3_26ltr")
+wrap_mode = 1
+
+[node name="InputField" type="LineEdit" parent="Chat Node/ChatBox/VBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+theme_override_colors/clear_button_color_pressed = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/clear_button_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/selection_color = Color(0.450919, 0.490016, 0.656478, 1)
+theme_override_colors/caret_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_placeholder_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_outline_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_selected_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_uneditable_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_26ltr")
+
+[node name="SendButton" type="Button" parent="Chat Node/ChatBox/VBoxContainer"]
+custom_minimum_size = Vector2(10, 30)
+layout_mode = 2
+theme = SubResource("Theme_d5r8n")
+theme_override_colors/font_disabled_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_hover_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_pressed_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_focus_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/font_outline_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_normal_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_focus_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_pressed_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_hover_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_colors/icon_disabled_color = Color(0.619608, 0.654902, 0.796078, 1)
+theme_override_fonts/font = ExtResource("3_26ltr")
+text = "SEND"
+
+[node name="ModeToggle" type="CheckBox" parent="Chat Node/ChatBox/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite Node" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite Node"]
+position = Vector2(-300, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_qj57k")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite Node/Sprite2D"]
+position = Vector2(900, 1090)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_2vep7")

@@ -1,45 +1,60 @@
-Mimi/                     # Root project folder
-│── backend/              # AI model & API (PyTorch, FastAPI/Flask)
-│   ├── models/           # Trained AI models
-│   ├── scripts/          # Data processing/training scripts
-│   ├── server.py         # API to communicate with the frontend
-│   ├── requirements.txt  # Python dependencies
-│── frontend/             # Godot interface
-│   ├── assets/           # Pixel art, animations, UI elements
-│   ├── scenes/           # Godot scenes (chatbox, menus, etc.)
-│   ├── scripts/          # Godot scripts for UI logic
-│   ├── main.tscn         # Main Godot scene
-│── data/                 # Open-source books, film clips, etc.
-│── notebooks/            # Jupyter Notebooks (for experimenting)
-│── README.md             # Project documentation
-│── setup.sh              # Setup script (optional)
+# Mimi — AI French Teacher
 
-# Mimi: AI French Teacher  
-A friendly AI-powered French teacher with a chatbot interface.  
+A French-tutoring chatbot with a Godot desktop client and a locally-served LLM backend.
 
----
+## Overview
 
-## Quick Start Guide  
+Mimi provides two interaction modes — free-form conversation and a structured lesson mode — through a Godot chat interface that talks to a local HTTP API backed by Mistral, served via Ollama.
 
-### 1. Activate Virtual Environment  
-Before running the project, activate the Python virtual environment:  
+## Architecture
 
-#### Mac & Linux  
+```
+Godot client (GDScript)  --HTTP-->  FastAPI backend  --local call-->  Ollama (Mistral)
+     chatbox.gd                       server.py
+  - UI + mode toggle                - /chat/ endpoint
+  - session ID generation            - session handling
+  - request/response parsing        - prompt construction
+```
+
+- **Frontend:** Godot 4.3, GDScript. `chatbox.gd` handles user input, a conversational/lesson mode toggle, per-session ID generation, and parses the JSON `{"response": ...}` payload returned by the server.
+- **Backend:** FastAPI server (`server.py`) exposing a `/chat/` endpoint that takes a `prompt` and `session_id` and returns the model's reply. Calls a locally running Ollama instance serving Mistral.
+- **Standalone experimentation:** `tester.py` loads Mistral directly through Hugging Face `transformers`, for testing generation outside the served pipeline.
+
+## Features
+
+- **Conversational mode** — open-ended chat practice in French.
+- **Lesson mode** — a toggleable, more structured teaching flow (currently routed through the same endpoint as conversational mode; server-side differentiation is still to be done).
+- **Per-session state** — each client session generates its own ID so the backend can track conversation context independently across sessions.
+
+## Tech stack
+
+| Layer | Tool |
+|---|---|
+| Frontend | Godot 4.3 (GDScript) |
+| Backend | FastAPI (Python) |
+| Model serving | Ollama, running Mistral |
+| Model experimentation | Hugging Face `transformers` |
+
+## Running it
+
 ```bash
+# Backend
 cd backend
 source venv/bin/activate
 uvicorn server:app --reload
-ollama run mistral 
+ollama run mistral
 
-godot frontend/main.tscn
+# Frontend
+godot frontend/mimi/main.tscn
+```
 
-# main files to edit: server.py, chatbox.gd
 
-#### Progress
-Need to continue working on prompt engineering, she doens't answer quite right.
-Add UI and art elements
-Add domain access free literature 
-Set a global personality
-Set safety rules
+## Roadmap
 
-    # converned about storing too muhc history. maybe give it full memory? like chat gpt? right now its session per session, is it storing it?
+- [ ] Improve prompt engineering — responses don't yet reliably stay in-character or on-task.
+- [ ] Differentiate lesson mode from conversational mode server-side.
+- [ ] Decide on and implement a conversation-memory strategy (currently session-scoped; full history vs. summarization vs. fixed window).
+- [ ] Set a consistent global personality/system prompt.
+- [ ] Add safety rules / guardrails around model output.
+- [ ] Add domain-specific reference material (e.g. grammar references) the model can draw on.
+- [ ] UI/art polish for the Godot client.

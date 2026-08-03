@@ -1,6 +1,5 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# Replace with the correct Mistral model name, such as "mistralai/mistral-7b"
 model_name = "mistralai/mistral-7b" 
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
